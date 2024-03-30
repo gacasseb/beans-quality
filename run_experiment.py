@@ -1,6 +1,6 @@
 import os
 os.environ['DISABLE_V2_BEHAVIOR'] = '1'
-os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID";
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"]="0" 
 import ktrain
 from ktrain import vision as vis
@@ -8,23 +8,23 @@ import numpy as np
 import pandas as pd
 import shutil
 import re
+from tensorflow import keras
 
 DATASET_DIR = './datasets/CD3/images/'
 
 def buildModel(bean_p, operation, data, PATTERN):
 
-  DATADIR = bean_p+'_'+operation+'/'
-  os.makedirs('./'+DATADIR)
-  print('Estimating '+bean_p+' using '+operation)
+  DATADIR = "features/" + bean_p + '_' + operation + '/'
+  if not os.path.exists('./' + DATADIR):
+    os.makedirs('./'+ DATADIR)
+
+  print('Estimating ' + bean_p + ' using ' + operation)
   
   if operation == 'max':
-    print('MAX')
     dts = data.groupby(['filename'], as_index=False ).max()
   if operation == 'min':
-    print('MIN')
     dts = data.groupby(['filename'], as_index=False ).min()
   if operation == 'mean':
-    print('MEAN')
     dts = data.groupby(['filename'], as_index=False ).mean()
   
   dts = dts[['filename', bean_p]]
@@ -32,7 +32,7 @@ def buildModel(bean_p, operation, data, PATTERN):
     shutil.copy2(DATASET_DIR + str(dts.loc[i,'filename']) + '.jpg', './' + DATADIR+str(np.round(dts.loc[i,bean_p],2)) + '.jpg')
 
   data_aug = vis.get_data_aug(horizontal_flip=True, vertical_flip=True)
-  (train_data, val_data, preproc) = vis.images_from_fname(DATADIR, pattern = PATTERN, data_aug = data_aug, val_pct=0.1, is_regression=True, random_state=42)  
+  (train_data, val_data, preproc) = vis.images_from_fname(DATADIR, pattern = PATTERN, data_aug = data_aug, val_pct=0.5, is_regression=True, random_state=42)  
 
   model = vis.image_regression_model('mobilenet', train_data, val_data)
 
@@ -43,13 +43,13 @@ def buildModel(bean_p, operation, data, PATTERN):
 
   predictor = ktrain.get_predictor(learner.model, preproc)
 
+  predictor.save("models/regressor_" + bean_p + "_" + operation)
   return predictor
 
 def img_prediction(predictor, fname):
     print(fname)
     predicted = float(predictor.predict_filename(fname)[0])
     return predicted
-
 
 if __name__ == "__main__":
 
@@ -81,32 +81,15 @@ if __name__ == "__main__":
   #  if not i.startswith('.'):
   #experimentRunner(dataset=args.exp, method_name=args.method, niterations=3, calibrated=args.cal)
 
-  #model = buildModel('L', 'min', dt, PATTERN)
-  #model.save("models/regressor_L_min")
-  #model = buildModel('L', 'max', dt, PATTERN)
-  #model.save("models/regressor_L_max")
   model = buildModel('L', 'mean', dt, PATTERN)
-  model.save("models/regressor_L_mean")
+  # model = buildModel('a', 'mean', dt, PATTERN)
+  # model = buildModel('b', 'mean', dt, PATTERN)
 
-  #model = buildModel('a', 'min', dt, PATTERN)
-  #model.save("models/regressor_a_min")
-  #model = buildModel('a', 'max', dt, PATTERN)
-  #model.save("models/regressor_a_max")
-  #model = buildModel('a', 'mean', dt, PATTERN)
-  #model.save("models/regressor_a_mean")
-
-  #model = buildModel('b', 'min', dt, PATTERN)
-  #model.save("models/regressor_b_min")
-  #model = buildModel('b', 'max', dt, PATTERN)
-  #model.save("models/regressor_b_max")
-  #model = buildModel('b', 'mean', dt, PATTERN)
-  #model.save("models/regressor_b_mean")
-
-  #learner = keras.models.load_model('models/regressor_L_min/tf_model.h5')
-  #predictor = ktrain.load_predictor('models/regressor_L_min')
-  #print(predictor.summary())
-  #print(predictor.predict_filename('beans/e1.jpg')[0])
+  learner = keras.models.load_model('./models/regressor_L_mean/tf_model.h5')
+  predictor = ktrain.load_predictor('./models/regressor_L_mean')
+  # print(predictor.summary())
+  # print(predictor.predict_filename('beans/e1.jpg')[0])
   #preproc = keras.models.load_model('models/regressor_L_min')
   #predictor = ktrain.get_predictor(learner)
-  #print(img_prediction(predictor, 'beans/e1.jpg'))
+  # print(img_prediction(predictor, 'C:\\Users\\ogabr\\OneDrive\\Documentos\\TCC\\datasets\\CD3\\images\\a1.jpg'))
   
