@@ -1,6 +1,3 @@
-#%reload_ext autoreload
-#%autoreload 2
-#%matplotlib inline
 import os
 os.environ['DISABLE_V2_BEHAVIOR'] = '1'
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID";
@@ -11,10 +8,8 @@ import numpy as np
 import pandas as pd
 import shutil
 import re
-import random
-import zipfile
-import pdb
-from tensorflow import keras
+
+DATASET_DIR = './datasets/CD3/images/'
 
 def buildModel(bean_p, operation, data, PATTERN):
 
@@ -34,7 +29,7 @@ def buildModel(bean_p, operation, data, PATTERN):
   
   dts = dts[['filename', bean_p]]
   for i in range(dts.shape[0]):
-    shutil.copy2('./beans/'+dts.loc[i,'filename']+'.jpg', './'+DATADIR+str(np.round(dts.loc[i,bean_p],2))+'.jpg')  
+    shutil.copy2(DATASET_DIR + str(dts.loc[i,'filename']) + '.jpg', './' + DATADIR+str(np.round(dts.loc[i,bean_p],2)) + '.jpg')
 
   data_aug = vis.get_data_aug(horizontal_flip=True, vertical_flip=True)
   (train_data, val_data, preproc) = vis.images_from_fname(DATADIR, pattern = PATTERN, data_aug = data_aug, val_pct=0.1, is_regression=True, random_state=42)  
@@ -58,10 +53,10 @@ def img_prediction(predictor, fname):
 
 if __name__ == "__main__":
 
-  dt = pd.read_csv('./beans.csv')
+  dt = pd.read_csv('./datasets/CD3/data.csv')
   parameters = ['L','a', 'b']
   operators = ['min', 'max']
-  PATTERN = r'([^/]+)\d+.jpg$'
+  PATTERN = r'(\d+(\.\d+)?)\.jpg$'
   p = re.compile(PATTERN)
 
   #with zipfile.ZipFile("beans.zip","r") as zip_ref:
@@ -86,7 +81,6 @@ if __name__ == "__main__":
   #  if not i.startswith('.'):
   #experimentRunner(dataset=args.exp, method_name=args.method, niterations=3, calibrated=args.cal)
 
-  dt = pd.read_csv('./beans.csv')
   #model = buildModel('L', 'min', dt, PATTERN)
   #model.save("models/regressor_L_min")
   #model = buildModel('L', 'max', dt, PATTERN)
