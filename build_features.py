@@ -5,11 +5,7 @@ import pandas as pd
 
 DATASET_DIR = './datasets/CD3/images/'
 
-def build_features():
-    bean_parameter = input("Choose a bean parameter (L, a or b): ")
-    operation = input("Choose the operation (min, max or mean): ")
-    dataset = input("Choose the dataset (1, 2 or 3): ")
-
+def build_features(bean_parameter, operation, dataset):
     parameters = ['L', 'a', 'b']
     operators = ['min', 'max', 'mean']
     datasets = ['1', '2', '3']
