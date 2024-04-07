@@ -1,0 +1,16 @@
+### Valid models
+
+pretrained_resnet50: 50-layer Residual Network (pretrained on ImageNet)
+resnet50: 50-layer Resididual Network (randomly initialized) [https://arxiv.org/abs/1512.03385]
+pretrained_mobilenet: MobileNet Neural Network (pretrained on ImageNet)
+mobilenet: MobileNet Neural Network (randomly initialized) [https://arxiv.org/abs/1704.04861]
+pretrained_mobilenetv3: MobileNetV3-Small Neural Network (pretrained on ImageNet)
+mobilenetv3: MobileNetV3-Small Neural Network (randomly initialized) [https://arxiv.org/abs/1905.02244]
+pretrained_inception: Inception Version 3  (pretrained on ImageNet)
+inception: Inception Version 3 (randomly initialized) [http://arxiv.org/abs/1512.00567]
+pretrained_efficientnetb1: EfficientNet-B1 Neural Network (pretrained on ImageNet)
+efficientnetb1: EfficientNet-B1 Neural Network (pretrained on ImageNet) [https://arxiv.org/abs/1905.11946]
+pretrained_efficientnetb7: EfficientNet-B7 Neural Network (pretrained on ImageNet)
+efficientnetb7: EfficientNet-B7 Neural Network (pretrained on ImageNet) [https://arxiv.org/abs/1905.11946]
+wrn22: 22-layer Wide Residual Network (randomly initialized)
+default_cnn: a default LeNet-like Convolutional Neural Network
