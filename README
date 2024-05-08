@@ -1,8 +1,23 @@
 ### Valid models
 
 pretrained_resnet50: 50-layer Residual Network (pretrained on ImageNet)
-resnet50: 50-layer Resididual Network (randomly initialized) [https://arxiv.org/abs/1512.03385]
+5 epocs 0.05
+L: 83.26
+a: 96.72
+b: 130.46
+
+resnet50: 50-layer Resididual Network (randomly initialized)
+5 epocs 0.05
+L: 100.41590619061442
+a: 5.390695890890584
+b: 12.86059913470294
+
 pretrained_mobilenet: MobileNet Neural Network (pretrained on ImageNet)
+5 epocs 0.05
+L: 1178.5393050570103
+a: 997.4913267921241
+b: 85.9684192004075
+
 mobilenet: MobileNet Neural Network (randomly initialized) [https://arxiv.org/abs/1704.04861]
 pretrained_mobilenetv3: MobileNetV3-Small Neural Network (pretrained on ImageNet)
 mobilenetv3: MobileNetV3-Small Neural Network (randomly initialized) [https://arxiv.org/abs/1905.02244]
@@ -13,4 +28,34 @@ efficientnetb1: EfficientNet-B1 Neural Network (pretrained on ImageNet) [https:/
 pretrained_efficientnetb7: EfficientNet-B7 Neural Network (pretrained on ImageNet)
 efficientnetb7: EfficientNet-B7 Neural Network (pretrained on ImageNet) [https://arxiv.org/abs/1905.11946]
 wrn22: 22-layer Wide Residual Network (randomly initialized)
+
 default_cnn: a default LeNet-like Convolutional Neural Network
+5 epocs 0.05
+    L: 10.372275782954585
+    a: 30.32510667196738
+    b: 10.993528591396574
+
+10 epocs 0.05
+    L: 8.375661341761683
+    a: 8.143837038992118
+    b: 7.073488196433128
+
+30 epocs 0.05
+    L: 9.237878242286476
+    a: 3.203550965276495
+    b: 2.067801658699104
+
+30 epocs 0.1
+    L: 17.493101073119018
+    a: 3.1473516683904976
+    b: 2.017005082963823
+
+30 epocs 0.02
+    L: 7.012477840389218
+    a: 2.9454424946140603
+    b: 119.62436007614819
+
+70 epocs 0.04
+    L: 7.430665833069397
+    a: 2.558517367911124
+    b: 1.876009639568157

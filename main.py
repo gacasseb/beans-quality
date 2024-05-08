@@ -15,8 +15,7 @@ def main():
         if choice == "1":
             build_model()
         elif choice == "2":
-            bean_parameter = input("Choose a bean parameter (L, a or b): ")
-            make_prediction(bean_parameter)
+            make_prediction()
         elif choice == "3":
             bean_parameter = input("Choose a bean parameter (L, a or b): ")
             operation = input("Choose the operation (min, max or mean): ")
