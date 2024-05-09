@@ -6,6 +6,10 @@ import ktrain
 from scipy.stats import rankdata
 from scipy.stats import norm
 
+def save_to_csv(data, filename):
+    df = pd.DataFrame(data, columns=['id', 'attribute', 'original', 'prediction', 'difference'])
+    df.to_csv(filename, index=False)
+
 # def make_prediction(bean_parameter, operation):
 def make_prediction():
     DATADIR = "./datasets/CD3/images/"
@@ -14,6 +18,7 @@ def make_prediction():
     model_name = input("Enter model name: ")
     
     bean_parameters = ["L", "a", "b"]
+    data = []
     
     for bean_parameter in bean_parameters:
         #load predictor
@@ -32,11 +37,17 @@ def make_prediction():
                 # Calculate difference between prediction and original value
                 difference = abs(prediction - original_value)
                 print('data: ' + str(original_value) + ' prediction: ' + str(prediction) + ' difference: ' + str(difference))
+
                 predictions.append(difference)
+                data.append([filename.split('.')[0], bean_parameter, original_value, prediction, difference])
 
         # Calculate average difference
         average_difference = np.mean(predictions)
         print(bean_parameter + f": {average_difference}")
+
+        data.append(['MAE', '', '', '', average_difference])
+        save_to_csv(data, model_name + '.csv')
+     
         
 def calculate_CD(k, N, alpha=0.05):
     q = norm.ppf(1 - alpha / 2)

@@ -1,4 +1,5 @@
 import os
+os.environ['TF_USE_LEGACY_KERAS'] = 'True'
 import ktrain
 from ktrain import vision as vis
 import re
@@ -20,7 +21,7 @@ def build_model():
         model = vis.image_regression_model(model_name, train_data, val_data)
 
         learner = ktrain.get_learner(model=model, train_data=train_data, val_data=val_data, workers=8, use_multiprocessing=False, batch_size=16)
-        learner.autofit(0.04, 70, reduce_on_plateau=5)
+        learner.autofit(0.002, 200, reduce_on_plateau=5)
 
         predictor = ktrain.get_predictor(learner.model, preproc)
         predictor.save("models/regressor_" + bean_parameter + "_" + operation + "/" + model_name)
