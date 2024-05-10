@@ -20,11 +20,14 @@ def build_model():
 
         model = vis.image_regression_model(model_name, train_data, val_data)
 
+        learning_rate = 0.04
+        epochs = 70
+
         learner = ktrain.get_learner(model=model, train_data=train_data, val_data=val_data, workers=8, use_multiprocessing=False, batch_size=16)
-        learner.autofit(0.002, 200, reduce_on_plateau=5)
+        learner.autofit(learning_rate, epochs, reduce_on_plateau=5)
 
         predictor = ktrain.get_predictor(learner.model, preproc)
-        predictor.save("models/regressor_" + bean_parameter + "_" + operation + "/" + model_name)
+        predictor.save("models/" + model_name + "_" + str(learning_rate) + "_" + str(epochs) + "/regressor_" + bean_parameter + "_" + operation)
 
         print("Model built successfully.")
         

@@ -1,0 +1,9 @@
+name: workstation_env
+dependencies:
+  - python=3.10
+  - pip=21.2.4
+  - pip:
+    - numpy 
+    - ktrain
+    - pandas
+    - scipy
