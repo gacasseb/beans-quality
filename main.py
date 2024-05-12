@@ -1,5 +1,6 @@
 from build_model import build_model
 from make_prediction import make_prediction
+from build_default_cnn import build_default_cnn
 from build_features import build_features
 
 def main():
@@ -13,14 +14,13 @@ def main():
         choice = input("Enter your choice: ")
 
         if choice == "1":
-            build_model()
+            build_default_cnn()
         elif choice == "2":
             make_prediction()
         elif choice == "3":
             bean_parameter = input("Choose a bean parameter (L, a or b): ")
             operation = input("Choose the operation (min, max or mean): ")
-            dataset = input("Choose the dataset (1, 2 or 3): ")
-            build_features(bean_parameter, operation, dataset)
+            build_features(bean_parameter, operation)
         elif choice == "4":
             print("Exiting the program.")
             break
